@@ -1,4 +1,5 @@
 <?php
+
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \objects\Entregas;
@@ -27,7 +28,7 @@ $app->get("/entrega/{id:[0-9]+}", function (Request $request, Response $response
 // POST nueva entrega
 $app->post("/entrega", function (Request $request, Response $response, array $args) {
     $fields = $request->getParsedBody();
-    
+
     $verificar = [
         "vehiculo_id" => [
             "type" => "number",
@@ -81,7 +82,7 @@ $app->post("/entrega", function (Request $request, Response $response, array $ar
     $validacion = new Validate($this->get("db"));
     $validacion->validar($fields, $verificar);
 
-    if($validacion->hasErrors()) {
+    if ($validacion->hasErrors()) {
         $resp = $validacion->getErrors();
     } else {
         $entregas = new Entregas($this->get("db"));
@@ -97,7 +98,7 @@ $app->post("/entrega", function (Request $request, Response $response, array $ar
 // PATCH finalizar entrega
 $app->patch("/entrega/{id:[0-9]+}/finalizar", function (Request $request, Response $response, array $args) {
     $fields = $request->getParsedBody();
-    
+
     $verificar = [
         "fechaDevolucion" => [
             "type" => "date"
@@ -116,7 +117,7 @@ $app->patch("/entrega/{id:[0-9]+}/finalizar", function (Request $request, Respon
     $validacion = new Validate($this->get("db"));
     $validacion->validar($fields, $verificar);
 
-    if($validacion->hasErrors()) {
+    if ($validacion->hasErrors()) {
         $resp = $validacion->getErrors();
     } else {
         $entregas = new Entregas($this->get("db"));
@@ -151,7 +152,7 @@ $app->get("/entregas/vehiculo/{id:[0-9]+}", function (Request $request, Response
              LEFT JOIN clientes c ON e.cliente_id = c.id
              WHERE e.vehiculo_id = :id
              ORDER BY e.fecha_entrega DESC";
-    
+
     $entregas = new Entregas($this->get("db"));
     $resp = $entregas->getAll($query)->getResult();
     $response->getBody()->write(json_encode($resp));
@@ -167,12 +168,23 @@ $app->get("/entregas/cliente/{id:[0-9]+}", function (Request $request, Response 
              LEFT JOIN vehiculos v ON e.vehiculo_id = v.id
              WHERE e.cliente_id = :id
              ORDER BY e.fecha_entrega DESC";
-    
+
     $entregas = new Entregas($this->get("db"));
-    $resp = $entregas->getAll($query)->getResult();
+    $result = $entregas->getAll($query, ["id" => $args["id"]]);
+
+    // Verificar si el resultado es null
+    if ($result === null) {
+        $resp = (object) [
+            'ok' => true,
+            'msg' => 'No hay entregas para este cliente',
+            'data' => []
+        ];
+    } else {
+        $resp = $result->getResult();
+    }
+
     $response->getBody()->write(json_encode($resp));
     return $response
         ->withHeader("Content-Type", "application/json")
         ->withStatus($resp->ok ? 200 : 409);
 });
-?>

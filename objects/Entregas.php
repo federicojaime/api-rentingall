@@ -15,6 +15,44 @@ class Entregas extends Base
         $this->conn = $db; // Asegurar que la conexión se almacena
     }
 
+    public function getAll($query, $params = [])
+    {
+        try {
+            // Si $params no contiene 'id' pero el query incluye ':id', extraerlo de $params
+            if (strpos($query, ':id') !== false && !isset($params['id']) && func_num_args() > 1) {
+                $args = func_get_args();
+                if (isset($args[1]['id'])) {
+                    $params = ['id' => $args[1]['id']];
+                }
+            }
+
+            $stmt = $this->conn->prepare($query);
+
+            foreach ($params as $key => $value) {
+                $stmt->bindValue(':' . $key, $value);
+            }
+
+            $stmt->execute();
+            $results = $stmt->fetchAll(\PDO::FETCH_OBJ);
+
+            // Asegurarnos de que siempre tenemos un resultado, incluso si está vacío
+            $this->result = (object) [
+                'ok' => true,
+                'msg' => '',
+                'data' => $results
+            ];
+
+            return $this;
+        } catch (\Exception $e) {
+            $this->result = (object) [
+                'ok' => false,
+                'msg' => $e->getMessage(),
+                'data' => []
+            ];
+
+            return $this;
+        }
+    }
     public function getEntregas()
     {
         $query = "SELECT e.*, 

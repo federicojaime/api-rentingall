@@ -15,10 +15,10 @@ $dotenv->load();
 
 $container->set("db", function () {
 	$con = array(
-		"host" => $_ENV["DB_HOST"] ?? "localhost",
-		"dbname" => $_ENV["DB_NAME"] ?? "bd-renting-all",
-		"user" => $_ENV["DB_USER"] ?? "root",
-		"pass" => $_ENV["DB_PASS"] ?? ""
+		"host" => "srv1597.hstgr.io", // Hostinger usually uses localhost
+		"dbname" => "u565673608_bd_renting_all",
+		"user" => "u565673608_bd_renting_all",
+		"pass" => "wsN9[Hl0:R"
 	);
 	$pdo = new PDO("mysql:host=" . $con["host"] . ";dbname=" . $con["dbname"], $con["user"], $con["pass"], array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

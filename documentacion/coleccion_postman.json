@@ -1,0 +1,1078 @@
+{
+    "info": {
+        "_postman_id": "7a8b9c0d-1e2f-3g4h-5i6j-7k8l9m0n1o2p",
+        "name": "API Alquiler de Vehículos",
+        "description": "API para la gestión de alquiler de vehículos desarrollada con Slim Framework 4",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "12345678"
+    },
+    "item": [
+        {
+            "name": "Autenticación",
+            "item": [
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"usuario@example.com\",\n    \"password\": \"contraseña\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/user/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user",
+                                "login"
+                            ]
+                        },
+                        "description": "Iniciar sesión en el sistema"
+                    }
+                },
+                {
+                    "name": "Registro",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"nuevo@example.com\",\n    \"firstname\": \"Nombre\",\n    \"lastname\": \"Apellido\",\n    \"password\": \"contraseña\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/user/register",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user",
+                                "register"
+                            ]
+                        },
+                        "description": "Registrar un nuevo usuario"
+                    }
+                },
+                {
+                    "name": "Validar Token",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/user/token/validate/{{token}}",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user",
+                                "token",
+                                "validate",
+                                "{{token}}"
+                            ]
+                        },
+                        "description": "Validar un token JWT"
+                    }
+                },
+                {
+                    "name": "Recuperar Contraseña",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"usuario@example.com\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/user/password/recover",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user",
+                                "password",
+                                "recover"
+                            ]
+                        },
+                        "description": "Solicitar recuperación de contraseña"
+                    }
+                }
+            ],
+            "description": "Endpoints relacionados con la autenticación y gestión de usuarios"
+        },
+        {
+            "name": "Usuarios",
+            "item": [
+                {
+                    "name": "Obtener Todos los Usuarios",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "users"
+                            ]
+                        },
+                        "description": "Obtener lista de todos los usuarios"
+                    }
+                },
+                {
+                    "name": "Obtener Usuario por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/user/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user",
+                                "1"
+                            ]
+                        },
+                        "description": "Obtener información de un usuario específico"
+                    }
+                },
+                {
+                    "name": "Crear Usuario",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"nuevo@example.com\",\n    \"firstname\": \"Nombre\",\n    \"lastname\": \"Apellido\",\n    \"password\": \"contraseña\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/user",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user"
+                            ]
+                        },
+                        "description": "Crear un nuevo usuario directamente (sin proceso de registro)"
+                    }
+                },
+                {
+                    "name": "Eliminar Usuario",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/user/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user",
+                                "1"
+                            ]
+                        },
+                        "description": "Eliminar un usuario existente"
+                    }
+                },
+                {
+                    "name": "Cambiar Contraseña",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"id\": 1,\n    \"password\": \"nueva_contraseña\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/user/password",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user",
+                                "password"
+                            ]
+                        },
+                        "description": "Cambiar la contraseña de un usuario"
+                    }
+                }
+            ],
+            "description": "Gestión de usuarios del sistema"
+        },
+        {
+            "name": "Clientes",
+            "item": [
+                {
+                    "name": "Obtener Todos los Clientes",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/clientes",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "clientes"
+                            ]
+                        },
+                        "description": "Obtener lista de todos los clientes"
+                    }
+                },
+                {
+                    "name": "Obtener Cliente por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/cliente/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cliente",
+                                "1"
+                            ]
+                        },
+                        "description": "Obtener información de un cliente específico"
+                    }
+                },
+                {
+                    "name": "Buscar Cliente por DNI/CUIT",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/cliente/buscar/30123456789",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cliente",
+                                "buscar",
+                                "30123456789"
+                            ]
+                        },
+                        "description": "Buscar un cliente por su número de DNI o CUIT"
+                    }
+                },
+                {
+                    "name": "Crear Cliente",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"tipoCliente\": \"persona\",\n    \"nombre\": \"Juan Pérez\",\n    \"dniCuit\": \"30123456\",\n    \"telefono\": \"1122334455\",\n    \"email\": \"juan@example.com\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/cliente",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cliente"
+                            ]
+                        },
+                        "description": "Crear un nuevo cliente"
+                    }
+                },
+                {
+                    "name": "Actualizar Cliente",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"tipoCliente\": \"persona\",\n    \"nombre\": \"Juan Pérez Actualizado\",\n    \"dniCuit\": \"30123456\",\n    \"telefono\": \"1122334455\",\n    \"email\": \"juan.actualizado@example.com\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/cliente/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cliente",
+                                "1"
+                            ]
+                        },
+                        "description": "Actualizar información de un cliente existente"
+                    }
+                },
+                {
+                    "name": "Eliminar Cliente",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/cliente/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cliente",
+                                "1"
+                            ]
+                        },
+                        "description": "Eliminar un cliente existente"
+                    }
+                }
+            ],
+            "description": "Gestión de clientes (personas o empresas)"
+        },
+        {
+            "name": "Vehículos",
+            "item": [
+                {
+                    "name": "Obtener Todos los Vehículos",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/vehiculos",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "vehiculos"
+                            ]
+                        },
+                        "description": "Obtener lista de todos los vehículos"
+                    }
+                },
+                {
+                    "name": "Obtener Vehículo por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/vehiculo/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "vehiculo",
+                                "1"
+                            ]
+                        },
+                        "description": "Obtener información de un vehículo específico"
+                    }
+                },
+                {
+                    "name": "Crear Vehículo",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nroInterno\": \"V001\",\n    \"designacion\": \"Sedán 4 puertas\",\n    \"marca\": \"Toyota\",\n    \"modelo\": \"Corolla\",\n    \"adquisicion\": \"2023-01-15\",\n    \"motor\": \"ABC123456\",\n    \"chasis\": \"XYZ987654\",\n    \"patente\": \"AB123CD\",\n    \"titulo\": \"Título propiedad\",\n    \"estado\": \"DISPONIBLE\",\n    \"responsable\": \"Departamento de Flota\",\n    \"ministerio\": \"Ministerio de Transporte\",\n    \"precio\": 25000,\n    \"compania\": \"Seguros XYZ\",\n    \"nroPoliza\": \"POL-12345\",\n    \"vencimiento\": \"2024-01-15\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/vehiculo",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "vehiculo"
+                            ]
+                        },
+                        "description": "Crear un nuevo vehículo"
+                    }
+                },
+                {
+                    "name": "Actualizar Vehículo",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"estado\": \"MANTENIMIENTO\",\n    \"responsable\": \"Taller Central\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/vehiculo/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "vehiculo",
+                                "1"
+                            ]
+                        },
+                        "description": "Actualizar información de un vehículo existente"
+                    }
+                },
+                {
+                    "name": "Eliminar Vehículo",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/vehiculo/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "vehiculo",
+                                "1"
+                            ]
+                        },
+                        "description": "Eliminar un vehículo existente"
+                    }
+                }
+            ],
+            "description": "Gestión de vehículos de la flota"
+        },
+        {
+            "name": "Entregas",
+            "item": [
+                {
+                    "name": "Obtener Todas las Entregas",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/entregas",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "entregas"
+                            ]
+                        },
+                        "description": "Obtener lista de todas las entregas de vehículos"
+                    }
+                },
+                {
+                    "name": "Obtener Entrega por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/entrega/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "entrega",
+                                "1"
+                            ]
+                        },
+                        "description": "Obtener información de una entrega específica"
+                    }
+                },
+                {
+                    "name": "Entregas por Vehículo",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/entregas/vehiculo/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "entregas",
+                                "vehiculo",
+                                "1"
+                            ]
+                        },
+                        "description": "Obtener todas las entregas de un vehículo específico"
+                    }
+                },
+                {
+                    "name": "Entregas por Cliente",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/entregas/cliente/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "entregas",
+                                "cliente",
+                                "1"
+                            ]
+                        },
+                        "description": "Obtener todas las entregas de un cliente específico"
+                    }
+                },
+                {
+                    "name": "Crear Entrega",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"vehiculo_id\": 1,\n    \"cliente_id\": 1,\n    \"funcionarioEntrega\": \"María López\",\n    \"funcionarioRecibe\": \"Juan Pérez\",\n    \"dniEntrega\": \"20123456\",\n    \"dniRecibe\": \"30123456\",\n    \"fechaEntrega\": \"2023-06-01\",\n    \"lugarEntrega\": \"Oficina Central\",\n    \"kilometrajeEntrega\": 5000,\n    \"nivelCombustible\": \"MEDIO\",\n    \"observaciones\": \"Entrega en perfectas condiciones\",\n    \"inventario\": {\n        \"lucesPrincipales\": true,\n        \"luzMedia\": true,\n        \"luzStop\": true,\n        \"antenaRadio\": true,\n        \"limpiaParabrisas\": true,\n        \"espejoIzquierdo\": true,\n        \"espejoDerecho\": true,\n        \"vidriosLaterales\": true,\n        \"parabrisas\": true,\n        \"tapones\": true,\n        \"taponGasolina\": true,\n        \"carroceria\": true,\n        \"parachoqueDelantero\": true,\n        \"parachoqueTrasero\": true,\n        \"placas\": true,\n        \"calefaccion\": true,\n        \"radioCd\": true,\n        \"bocinas\": true,\n        \"encendedor\": true,\n        \"espejoRetrovisor\": true,\n        \"ceniceros\": true,\n        \"cinturones\": true,\n        \"manijasVidrios\": true,\n        \"pisosGoma\": true,\n        \"tapetes\": true,\n        \"fundaAsientos\": true,\n        \"jaladorPuertas\": true,\n        \"sujetadorManos\": true,\n        \"gato\": true,\n        \"llaveRueda\": true,\n        \"estucheLlaves\": true,\n        \"triangulo\": true,\n        \"llantaAuxilio\": true,\n        \"extintor\": true,\n        \"botiquin\": true,\n        \"otros\": false,\n        \"soat\": true,\n        \"inspeccionTecnica\": true\n    }\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/entrega",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "entrega"
+                            ]
+                        },
+                        "description": "Crear una nueva entrega de vehículo"
+                    }
+                },
+                {
+                    "name": "Finalizar Entrega",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"fechaDevolucion\": \"2023-06-15\",\n    \"lugarDevolucion\": \"Oficina Central\",\n    \"kilometrajeDevolucion\": 5500,\n    \"observaciones\": \"Devolución en buen estado\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/entrega/1/finalizar",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "entrega",
+                                "1",
+                                "finalizar"
+                            ]
+                        },
+                        "description": "Finalizar una entrega (registrar la devolución del vehículo)"
+                    }
+                },
+                {
+                    "name": "Eliminar Entrega",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/entrega/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "entrega",
+                                "1"
+                            ]
+                        },
+                        "description": "Eliminar una entrega existente"
+                    }
+                }
+            ],
+            "description": "Gestión de entregas y devoluciones de vehículos"
+        },
+        {
+            "name": "Facturas",
+            "item": [
+                {
+                    "name": "Obtener Todas las Facturas",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/facturas",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "facturas"
+                            ]
+                        },
+                        "description": "Obtener lista de todas las facturas"
+                    }
+                },
+                {
+                    "name": "Obtener Factura por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/factura/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "factura",
+                                "1"
+                            ]
+                        },
+                        "description": "Obtener información de una factura específica"
+                    }
+                },
+                {
+                    "name": "Facturas por Vehículo",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/facturas/vehiculo/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "facturas",
+                                "vehiculo",
+                                "1"
+                            ]
+                        },
+                        "description": "Obtener todas las facturas de un vehículo específico"
+                    }
+                },
+                {
+                    "name": "Facturas por Mes",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/facturas/2023/6",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "facturas",
+                                "2023",
+                                "6"
+                            ]
+                        },
+                        "description": "Obtener todas las facturas de un mes específico"
+                    }
+                },
+                {
+                    "name": "Estadísticas de Facturación",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/facturas/estadisticas",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "facturas",
+                                "estadisticas"
+                            ]
+                        },
+                        "description": "Obtener estadísticas generales de facturación"
+                    }
+                },
+                {
+                    "name": "Estadísticas por Mes",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/facturas/estadisticas/2023/6",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "facturas",
+                                "estadisticas",
+                                "2023",
+                                "6"
+                            ]
+                        },
+                        "description": "Obtener estadísticas de facturación de un mes específico"
+                    }
+                },
+                {
+                    "name": "Crear Factura",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"vehiculo_id\": 1,\n    \"fecha\": \"2023-06-15\",\n    \"numero\": \"F-001\",\n    \"monto\": 1500,\n    \"pagado\": false,\n    \"notas\": \"Factura por alquiler del vehículo\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/factura",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "factura"
+                            ]
+                        },
+                        "description": "Crear una nueva factura"
+                    }
+                },
+                {
+                    "name": "Actualizar Factura",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"vehiculo_id\": 1,\n    \"fecha\": \"2023-06-15\",\n    \"numero\": \"F-001\",\n    \"monto\": 1600,\n    \"notas\": \"Factura actualizada por alquiler del vehículo\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/factura/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "factura",
+                                "1"
+                            ]
+                        },
+                        "description": "Actualizar información de una factura existente"
+                    }
+                },
+                {
+                    "name": "Actualizar Estado de Pago",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"pagado\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/factura/1/pago",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "factura",
+                                "1",
+                                "pago"
+                            ]
+                        },
+                        "description": "Actualizar el estado de pago de una factura"
+                    }
+                },
+                {
+                    "name": "Eliminar Factura",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/factura/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "factura",
+                                "1"
+                            ]
+                        },
+                        "description": "Eliminar una factura existente"
+                    }
+                }
+            ],
+            "description": "Gestión de facturas asociadas a los vehículos"
+        },
+        {
+            "name": "Estadísticas",
+            "item": [
+                {
+                    "name": "Estadísticas Generales",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/stats",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "stats"
+                            ]
+                        },
+                        "description": "Obtener estadísticas generales del sistema"
+                    }
+                },
+                {
+                    "name": "Datos para Gráficos",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/stats/chart",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "stats",
+                                "chart"
+                            ]
+                        },
+                        "description": "Obtener datos para generar gráficos estadísticos"
+                    }
+                }
+            ],
+            "description": "Endpoints de estadísticas generales del sistema"
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost/api-slimv4",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "tu-token-jwt",
+            "type": "string"
+        }
+    ]
+}
